@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TodoList.DataAccess\TodoList.DataAccess.csproj" />
+    <ProjectReference Include="..\TodoList.Entities\TodoList.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
