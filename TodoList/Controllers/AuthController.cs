@@ -41,6 +41,12 @@ namespace TodoList.Controllers
             return _authService.LoginUser(ReqModel);
         }
 
+        [HttpPost("Activate")]
+        public UserAuthModel ActivateUser(UserIdModel User)
+        {
+            return _authService.ActivateUser(User.UserID);
+        }
+
         [HttpPut("{id}")]
         public UserAuthModel Put(int id,UserAuthModel User)
         {
@@ -58,5 +64,6 @@ namespace TodoList.Controllers
         {
             return _authService.UpdateUser(id, User);
         }
+
     }
 }

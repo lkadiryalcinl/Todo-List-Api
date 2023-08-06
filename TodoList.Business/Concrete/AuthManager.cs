@@ -7,7 +7,7 @@ using TodoList.Entities.Models;
 using TodoList.Business.utils;
 
 namespace TodoList.Business.Concrete
-{   
+{
     public class AuthManager : IAuthService
     {
 
@@ -15,6 +15,11 @@ namespace TodoList.Business.Concrete
         public AuthManager(IUserAuthRepository authRepo)
         {
             _userAuthRepository = authRepo;
+        }
+
+        public UserAuthModel ActivateUser(int id)
+        {
+            return _userAuthRepository.ActivateUser(id);
         }
 
         public LoginResponseModel CreateUser(UserAuthModel User)
@@ -39,11 +44,11 @@ namespace TodoList.Business.Concrete
             _userAuthRepository.RemoveUser(id);
         }
 
-        public UserAuthModel UpdateUser(int id,UserAuthModel User)
+        public UserAuthModel UpdateUser(int id, UserAuthModel User)
         {
             User.UserID = id;
             User.Password = Utils.EncryptPassword(User.Password);
-            return _userAuthRepository.UpdateUser(id,User);
+            return _userAuthRepository.UpdateUser(id, User);
         }
     }
 }

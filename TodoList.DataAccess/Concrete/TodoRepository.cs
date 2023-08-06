@@ -57,7 +57,7 @@ namespace TodoList.DataAccess.Concrete
 
         public List<TodoModel> GetAllTodos(int UserID)
         {
-            var Todos = Dbset.Where(todo => todo.UserID == UserID).OrderByDescending(x => x.IsFav);
+            var Todos = Dbset.Where(todo => todo.UserID == UserID && todo.IsActive == true).OrderByDescending(x => x.IsFav);
             return Todos.ToList();
         }
 
@@ -68,7 +68,9 @@ namespace TodoList.DataAccess.Concrete
 
         public void RemoveTodo(int TodoID)
         {
-            Dbset.Remove(GetTodoByID(TodoID));
+            TodoModel Todo = GetTodoByID(TodoID);
+            Todo.IsActive = false;
+            Dbset.Update(Todo);
             Dbcontext.SaveChanges();
         }
 

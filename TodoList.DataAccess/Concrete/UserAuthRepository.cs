@@ -30,7 +30,11 @@ namespace TodoList.DataAccess.Concrete
         public LoginResponseModel LoginUser(LoginRequestModel ReqModel)
         {
             LoginResponseModel ResModel = new LoginResponseModel();
-            UserAuthModel user = Dbset.FirstOrDefault(u => u.Username == ReqModel.Username && u.Password == ReqModel.Password);
+            UserAuthModel user = Dbset.FirstOrDefault(
+                u => u.Username == ReqModel.Username
+                && u.Password == ReqModel.Password
+                && u.IsActive == true
+                );
             if (user != null)
             {
                 ResModel.UserId = user.UserID;
@@ -40,19 +44,33 @@ namespace TodoList.DataAccess.Concrete
             return ResModel;
         }
 
-        public UserAuthModel GetUserById(int id )
+        public UserAuthModel GetUserById(int id)
         {
-            return Dbset.Find(id);
+            UserAuthModel User = Dbset.Find(id);
+            if (User.IsActive)
+                return User;
+            return null;
         }
 
         public void RemoveUser(int id)
         {
-            Dbset.Remove(GetUserById(id));
+            UserAuthModel User = GetUserById(id);
+            User.IsActive = false;
+            Dbset.Update(User);
             authDbContext.SaveChanges();
         }
 
-        public UserAuthModel UpdateUser(int id,UserAuthModel User)
+        public UserAuthModel UpdateUser(int id, UserAuthModel User)
         {
+            Dbset.Update(User);
+            authDbContext.SaveChanges();
+            return User;
+        }
+
+        public UserAuthModel ActivateUser(int id)
+        {
+            UserAuthModel User = Dbset.FirstOrDefault(user => user.UserID == id);
+            User.IsActive = true;
             Dbset.Update(User);
             authDbContext.SaveChanges();
             return User;

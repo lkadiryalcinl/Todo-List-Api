@@ -26,7 +26,7 @@ namespace TodoList.DataAccess.Concrete
 
         public List<TModel> GetAllTodos(int userID)
         {
-            return mongoCollection.Find(todo => todo.UserID == userID).ToList();
+            return mongoCollection.Find(todo => todo.UserID == userID && todo.IsActive == true).ToList();
         }
 
         public TModel GetTodoByID(int TodoID)

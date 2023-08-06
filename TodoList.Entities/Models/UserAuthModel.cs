@@ -26,5 +26,7 @@ namespace TodoList.Entities.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
+        [Display(Name = "Active")]
+        public Boolean IsActive { get; set; } = true;
     }
 }
