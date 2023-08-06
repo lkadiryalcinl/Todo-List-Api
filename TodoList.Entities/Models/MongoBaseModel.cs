@@ -17,5 +17,8 @@ namespace TodoList.Entities.Models
         public Boolean IsFinished { get; set; }
         [BsonElement("isFav")]
         public Boolean IsFav { get; set; }
+        [BsonElement("isActive")]
+        public Boolean IsActive { get; set; } = true;
+
     }
 }

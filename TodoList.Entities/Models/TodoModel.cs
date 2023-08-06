@@ -40,5 +40,7 @@ namespace TodoList.Entities.Models
 
         [Display(Name = "Favorite")]
         public Boolean IsFav { get; set; } = false;
+        [Display(Name = "Active")]
+        public Boolean IsActive { get; set; } = true;
     }
 }

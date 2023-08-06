@@ -36,8 +36,13 @@ namespace TodoList.DataAccess.Concrete
 
         public void RemoveTodo(int TodoID)
         {
+            TModel Todo = GetTodoByID(TodoID);
+            if (Todo != null)
+            {
+                Todo.IsActive = false;
+            }
 
-            mongoCollection.DeleteOne(todo => todo.TodoID == TodoID);
+            UpdateTodo(Todo);
         }
 
         public TModel UpdateTodo(TModel Todo)
@@ -66,6 +71,8 @@ namespace TodoList.DataAccess.Concrete
             }
             return UpdateTodo(Todo);
         }
+
+
     }
 
 }

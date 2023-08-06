@@ -26,17 +26,26 @@ namespace TodoList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddDbContext<TodoListAuthDbContext>();
             services.AddScoped<DbContext, TodoListAuthDbContext>();
 
+            //addScoped, her HTTP isteği için bir örnek oluşturup, 
+            //aynı istek içinde yapılan tüm çağrılarda aynı örneğin kullanılmasını sağlayan
+            // kapsamlı hizmetler (scoped services) oluşturmak için kullanılır.
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
             services.AddScoped<IAuthService, AuthManager>();
             services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddScoped<ITodoService, TodoManager>();
 
             string mongoConnectionString = Configuration.GetConnectionString("MongoConnectionString");
-            services.AddTransient<BaseMongoRepository<FavTodoMongoModel>>(s => new FavTodoMongoRepository(mongoConnectionString, "Todo-list", "TodoFavorited"));
-            services.AddTransient<BaseMongoRepository<FinTodoMongoModel>>(s => new FinTodoMongoRepository(mongoConnectionString, "Todo-list", "TodoFinished"));
+
+            //addTransient, her talep edildiğinde yeni bir örneği döndüren geçici hizmetler (transient services) oluşturmak için kullanılır.
+            services.AddTransient<BaseMongoRepository<FavTodoMongoModel>>
+                (s => new FavTodoMongoRepository(mongoConnectionString, "Todo-list", "TodoFavorited"));
+
+            services.AddTransient<BaseMongoRepository<FinTodoMongoModel>>
+                (s => new FinTodoMongoRepository(mongoConnectionString, "Todo-list", "TodoFinished"));
 
             services.AddCors(options =>
             {
