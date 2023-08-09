@@ -32,9 +32,7 @@ namespace TodoList.DataAccess.Concrete
             LoginResponseModel ResModel = new LoginResponseModel();
             UserAuthModel user = Dbset.FirstOrDefault(
                 u => u.Username == ReqModel.Username
-                && u.Password == ReqModel.Password
-                && u.IsActive == true
-                );
+                && u.Password == ReqModel.Password);
             if (user != null)
             {
                 ResModel.UserId = user.UserID;
@@ -67,13 +65,17 @@ namespace TodoList.DataAccess.Concrete
             return User;
         }
 
-        public UserAuthModel ActivateUser(int id)
+        public LoginResponseModel ActivateUser(int id)
         {
+            LoginResponseModel Res = new LoginResponseModel();
             UserAuthModel User = Dbset.FirstOrDefault(user => user.UserID == id);
             User.IsActive = true;
+            Res.HasAccess = true;
+            Res.UserId = id;
+
             Dbset.Update(User);
             authDbContext.SaveChanges();
-            return User;
+            return Res;
         }
     }
 }

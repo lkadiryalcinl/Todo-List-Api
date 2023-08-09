@@ -17,7 +17,7 @@ namespace TodoList.Business.Concrete
             _userAuthRepository = authRepo;
         }
 
-        public UserAuthModel ActivateUser(int id)
+        public LoginResponseModel ActivateUser(int id)
         {
             return _userAuthRepository.ActivateUser(id);
         }

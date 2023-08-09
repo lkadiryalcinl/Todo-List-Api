@@ -19,14 +19,13 @@ namespace TodoList.DataAccess.Concrete
             Dbset = Dbcontext.Set<TodoModel>();
         }
 
-        public TodoModel AddTodo(TodoModel Todo)
+        public void AddTodo(TodoModel Todo)
         {
             Dbset.Add(Todo);
             Dbcontext.SaveChanges();
-            return Todo;
         }
 
-        public TodoModel FavTodo(TodoIdModel IdModel)
+        public void FavTodo(TodoIdModel IdModel)
         {
             TodoModel Todo = new TodoModel();
             Todo = GetTodoByID(IdModel.TodoID);
@@ -37,11 +36,9 @@ namespace TodoList.DataAccess.Concrete
                 Dbset.Update(Todo);
                 Dbcontext.SaveChanges();
             }
-
-            return Todo;
         }
 
-        public TodoModel FinishedTodo(TodoIdModel IdModel)
+        public void FinishedTodo(TodoIdModel IdModel)
         {
             TodoModel Todo = GetTodoByID(IdModel.TodoID);
 
@@ -51,13 +48,11 @@ namespace TodoList.DataAccess.Concrete
                 Dbset.Update(Todo);
                 Dbcontext.SaveChanges();
             }
-
-            return Todo;
         }
 
         public List<TodoModel> GetAllTodos(int UserID)
         {
-            var Todos = Dbset.Where(todo => todo.UserID == UserID && todo.IsActive == true).OrderByDescending(x => x.IsFav);
+            var Todos = Dbset.Where(todo => todo.UserID == UserID && todo.IsActive == true);
             return Todos.ToList();
         }
 
@@ -74,11 +69,10 @@ namespace TodoList.DataAccess.Concrete
             Dbcontext.SaveChanges();
         }
 
-        public TodoModel UpdateTodo(TodoModel Todo)
+        public void UpdateTodo(TodoModel Todo)
         {
             Dbset.Update(Todo);
             Dbcontext.SaveChanges();
-            return Todo;
         }
 
     }

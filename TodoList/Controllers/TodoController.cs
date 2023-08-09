@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Business.Abstract;
 using TodoList.Entities.Models;
+using TodoList.validators;
 
 namespace TodoList.Controllers
 {
@@ -33,20 +34,24 @@ namespace TodoList.Controllers
             return _todoService.GetTodoByID(id);
         }
 
-
-        [HttpPost("addTodo")]
-        public TodoModel Post(TodoModel Todo)
+        [HttpGet("favtodo/{id}")]
+        public IEnumerable<TodoModel> GetFav(int id)
         {
-            return _todoService.AddTodo(Todo);
+            return _todoService.GetFavTodo(id);
+        }
+
+        [HttpGet("finishedtodo/{id}")]
+        public IEnumerable<TodoModel> GetFinished(int id)
+        {
+            return _todoService.GetFinishedTodo(id);
         }
 
         [HttpPut]
-        public TodoModel Put(TodoModel Todo)
+        public void Put(TodoModel Todo)
         {
-            return _todoService.UpdateTodo(Todo);
+            _todoService.UpdateTodo(Todo);
         }
 
-        
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
@@ -54,15 +59,30 @@ namespace TodoList.Controllers
         }
 
         [HttpPut("finished")]
-        public TodoModel FinishedTodo(TodoIdModel IdModel)
+        public void FinishedTodo(TodoIdModel IdModel)
         {
-            return _todoService.FinishedTodo(IdModel);
+            _todoService.FinishedTodo(IdModel);
         }
 
         [HttpPut("favorited")]
-        public TodoModel FavTodo(TodoIdModel IdModel)
+        public void FavTodo(TodoIdModel IdModel)
         {
-            return _todoService.FavTodo(IdModel);
+            _todoService.FavTodo(IdModel);
         }
+
+        [HttpPost("addTodo")]
+        public void Post(TodoModel Todo)
+        {
+            var todoValidator = new TodoValidator();
+            var validationResult = todoValidator.Validate(Todo);
+
+            if (!validationResult.IsValid)
+            {
+                return;
+            }
+
+            _todoService.AddTodo(Todo);
+        }
+
     }
 }

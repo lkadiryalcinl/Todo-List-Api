@@ -17,5 +17,6 @@ namespace TodoList.DataAccess
 
         public DbSet<TodoModel> Todos { get; set; }
 
+        public DbSet<TodoUserModel> TodoUser { get; set; }
     }
 }

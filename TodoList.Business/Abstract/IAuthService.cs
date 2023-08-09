@@ -12,6 +12,6 @@ namespace TodoList.Business.Abstract
         UserAuthModel GetUserById(int id);
         void RemoveUser(int id);
         UserAuthModel UpdateUser(int id, UserAuthModel User);
-        UserAuthModel ActivateUser(int id);
+        LoginResponseModel ActivateUser(int id);
     }
 }

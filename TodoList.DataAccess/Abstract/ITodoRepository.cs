@@ -9,11 +9,11 @@ namespace TodoList.DataAccess.Abstract
     {
         List<TodoModel> GetAllTodos(int UserID);
         TodoModel GetTodoByID(int TodoID);
-        TodoModel UpdateTodo(TodoModel Todo);
+        void UpdateTodo(TodoModel Todo);
         void RemoveTodo(int TodoID);
-        TodoModel AddTodo(TodoModel Todo);
-        TodoModel FinishedTodo(TodoIdModel IdModel);
-        TodoModel FavTodo(TodoIdModel IdModel);
-
+        void AddTodo(TodoModel Todo);
+        void FinishedTodo(TodoIdModel IdModel);
+        void FavTodo(TodoIdModel IdModel);
+        
     }
 }

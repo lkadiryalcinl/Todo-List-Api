@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,15 +39,6 @@ namespace TodoList
             services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddScoped<ITodoService, TodoManager>();
 
-            string mongoConnectionString = Configuration.GetConnectionString("MongoConnectionString");
-
-            //addTransient, her talep edildiğinde yeni bir örneği döndüren geçici hizmetler (transient services) oluşturmak için kullanılır.
-            services.AddTransient<BaseMongoRepository<FavTodoMongoModel>>
-                (s => new FavTodoMongoRepository(mongoConnectionString, "Todo-list", "TodoFavorited"));
-
-            services.AddTransient<BaseMongoRepository<FinTodoMongoModel>>
-                (s => new FinTodoMongoRepository(mongoConnectionString, "Todo-list", "TodoFinished"));
-
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -61,6 +53,14 @@ namespace TodoList
                     });
 
             });
+
+            services.AddOpenApiDocument(Swag =>
+            {
+                Swag.Title = "Todo List API";
+            });
+
+            services.AddMvc().AddFluentValidation();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +84,9 @@ namespace TodoList
                 .AllowCredentials()
                 );
             app.UseMvc();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
     }
 }

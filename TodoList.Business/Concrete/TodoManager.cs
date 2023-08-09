@@ -16,24 +16,37 @@ namespace TodoList.Business.Concrete
             _todoRepository = repo;
         }
 
-        public TodoModel AddTodo(TodoModel Todo)
+        public void AddTodo(TodoModel Todo)
         {
-            return _todoRepository.AddTodo(Todo);
+            _todoRepository.AddTodo(Todo);
         }
 
-        public TodoModel FavTodo(TodoIdModel IdModel)
+        public void FavTodo(TodoIdModel IdModel)
         {
-            return _todoRepository.FavTodo(IdModel);
+            _todoRepository.FavTodo(IdModel);
         }
 
-        public TodoModel FinishedTodo(TodoIdModel IdModel)
+        public void FinishedTodo(TodoIdModel IdModel)
         {
-            return _todoRepository.FinishedTodo(IdModel);
+            _todoRepository.FinishedTodo(IdModel);
         }
 
         public List<TodoModel> GetAllTodos(int UserID)
         {
-            return _todoRepository.GetAllTodos(UserID);
+            var result = _todoRepository.GetAllTodos(UserID).FindAll(todo => todo.IsFinished == false);
+            return result;
+        }
+
+        public List<TodoModel> GetFavTodo(int id)
+        {
+            var result = _todoRepository.GetAllTodos(id).FindAll(todo => todo.IsFav == true && todo.IsFinished == false);
+            return result;
+        }
+
+        public List<TodoModel> GetFinishedTodo(int id)
+        {
+            var result = _todoRepository.GetAllTodos(id).FindAll(todo => todo.IsFinished == true);
+            return result;
         }
 
         public TodoModel GetTodoByID(int TodoID)
@@ -43,12 +56,12 @@ namespace TodoList.Business.Concrete
 
         public void RemoveTodo(int TodoID)
         {
-           _todoRepository.RemoveTodo(TodoID);
+            _todoRepository.RemoveTodo(TodoID);
         }
 
-        public TodoModel UpdateTodo(TodoModel Todo)
+        public void UpdateTodo(TodoModel Todo)
         {
-            return _todoRepository.UpdateTodo(Todo);
+            _todoRepository.UpdateTodo(Todo);
         }
     }
 }
