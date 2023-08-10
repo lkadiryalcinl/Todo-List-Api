@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Business.Abstract;
 using TodoList.Entities.Models;
+using TodoList.Entities.Models.ReqModels;
 using TodoList.validators;
 
 namespace TodoList.Controllers
@@ -80,6 +81,18 @@ namespace TodoList.Controllers
         public UserAuthModel Patch(int id, UserAuthModel User)
         {
             return _authService.UpdateUser(id, User);
+        }
+
+        [HttpPut("EditUser")]
+        public string EditUser(EditUserReqModel User)
+        {
+            return _authService.EditUser(User);
+        }
+
+        [HttpPut("ChangePassword")]
+        public string ChangePassword(ChangePasswordReqModel User)
+        {
+            return _authService.ChangePassword(User);
         }
 
     }

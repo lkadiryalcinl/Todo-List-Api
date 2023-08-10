@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using TodoList.Entities.Models;
+using TodoList.Entities.Models.ReqModels;
+using TodoList.Entities.Models.ResModels;
 
 namespace TodoList.DataAccess.Abstract
 {
@@ -13,5 +15,8 @@ namespace TodoList.DataAccess.Abstract
         void RemoveUser(int id);
         UserAuthModel UpdateUser(int id,UserAuthModel User);
         LoginResponseModel ActivateUser(int id);
+        string EditUser(EditUserReqModel User);
+        string ChangePassword(ChangePasswordReqModel User);
+
     }
 }

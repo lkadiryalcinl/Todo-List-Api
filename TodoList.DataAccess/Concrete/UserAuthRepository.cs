@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TodoList.DataAccess.Abstract;
 using TodoList.Entities.Models;
+using TodoList.Entities.Models.ReqModels;
+using TodoList.Entities.Models.ResModels;
 
 namespace TodoList.DataAccess.Concrete
 {
@@ -76,6 +78,47 @@ namespace TodoList.DataAccess.Concrete
             Dbset.Update(User);
             authDbContext.SaveChanges();
             return Res;
+        }
+
+        public string EditUser(EditUserReqModel User)
+        {
+            EditUserResModel Res = new EditUserResModel();
+            UserAuthModel _user = GetUserById(User.UserID);
+
+            var searchedUser = Dbset.FirstOrDefault(x => x.Username == User.Username);
+
+            if (searchedUser == null)
+            {
+                _user.Username = User.Username;
+                _user.Email = User.Email;
+
+                Dbset.Update(_user);
+                authDbContext.SaveChanges();
+                Res.EditUserResponse = "Success";
+            }
+            else
+                Res.EditUserResponse = "Usernameoremailtaken";
+            return Res.EditUserResponse;
+        }
+
+        public string ChangePassword(ChangePasswordReqModel User)
+        {
+            ChangePasswordResModel Res = new ChangePasswordResModel();
+            UserAuthModel _user = GetUserById(User.UserID);
+
+            if (_user.Password != User.NewPassword)
+            {
+                _user.Password = User.NewPassword;
+                Dbset.Update(_user);
+                authDbContext.SaveChanges();
+
+                Res.ChangePasswordResponse = "Success";
+            }
+            else
+            {
+                Res.ChangePasswordResponse = "PasswordSame";
+            }
+            return Res.ChangePasswordResponse;
         }
     }
 }

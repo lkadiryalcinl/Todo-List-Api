@@ -5,6 +5,8 @@ using TodoList.Business.Abstract;
 using TodoList.DataAccess.Abstract;
 using TodoList.Entities.Models;
 using TodoList.Business.utils;
+using TodoList.Entities.Models.ReqModels;
+using TodoList.Entities.Models.ResModels;
 
 namespace TodoList.Business.Concrete
 {
@@ -49,6 +51,27 @@ namespace TodoList.Business.Concrete
             User.UserID = id;
             User.Password = Utils.EncryptPassword(User.Password);
             return _userAuthRepository.UpdateUser(id, User);
+        }
+
+        public string EditUser(EditUserReqModel User)
+        {
+            UserAuthModel _user = _userAuthRepository.GetUserById(User.UserID);
+
+            if (_user.Password == Utils.EncryptPassword(User.ConfirmPassword))
+                return _userAuthRepository.EditUser(User);
+            return "PasswordWrong";
+        }
+
+        public string ChangePassword(ChangePasswordReqModel User)
+        {
+            UserAuthModel _user = _userAuthRepository.GetUserById(User.UserID);
+
+            if (_user.Password == Utils.EncryptPassword(User.oldPassword))
+            {
+                User.NewPassword = Utils.EncryptPassword(User.NewPassword);
+                return _userAuthRepository.ChangePassword(User);
+            }
+            return "PasswordWrong";
         }
     }
 }
