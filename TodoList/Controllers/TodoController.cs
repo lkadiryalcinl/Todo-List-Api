@@ -71,17 +71,17 @@ namespace TodoList.Controllers
         }
 
         [HttpPost("addTodo")]
-        public void Post(TodoModel Todo)
+        public IActionResult Post(TodoModel Todo)
         {
             var todoValidator = new TodoValidator();
             var validationResult = todoValidator.Validate(Todo);
 
             if (!validationResult.IsValid)
             {
-                return;
+                return BadRequest(validationResult.Errors);
             }
 
-            _todoService.AddTodo(Todo);
+            return Ok(_todoService.AddTodo(Todo));
         }
 
     }

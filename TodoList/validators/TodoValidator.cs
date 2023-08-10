@@ -13,7 +13,6 @@ namespace TodoList.validators
         {
             RuleFor(todo => todo.Title).NotNull().NotEmpty().MinimumLength(4).MaximumLength(50);
             RuleFor(todo => todo.Description).NotNull().NotEmpty().MinimumLength(4).MaximumLength(200);
-            RuleFor(todo => todo.DateCreated).LessThan(new DateTime());
             
         }
     }

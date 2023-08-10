@@ -13,7 +13,7 @@ namespace TodoList.Business.Abstract
         List<TodoModel> GetFinishedTodo(int id);
         void UpdateTodo(TodoModel Todo);
         void RemoveTodo(int TodoID);
-        void AddTodo(TodoModel Todo);
+        TodoModel AddTodo(TodoModel Todo);
         void FinishedTodo(TodoIdModel IdModel);
         void FavTodo(TodoIdModel IdModel);
     }

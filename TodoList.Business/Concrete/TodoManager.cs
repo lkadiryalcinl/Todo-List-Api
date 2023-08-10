@@ -16,9 +16,9 @@ namespace TodoList.Business.Concrete
             _todoRepository = repo;
         }
 
-        public void AddTodo(TodoModel Todo)
+        public TodoModel AddTodo(TodoModel Todo)
         {
-            _todoRepository.AddTodo(Todo);
+            return _todoRepository.AddTodo(Todo);
         }
 
         public void FavTodo(TodoIdModel IdModel)

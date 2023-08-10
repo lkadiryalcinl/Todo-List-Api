@@ -19,10 +19,11 @@ namespace TodoList.DataAccess.Concrete
             Dbset = Dbcontext.Set<TodoModel>();
         }
 
-        public void AddTodo(TodoModel Todo)
+        public TodoModel AddTodo(TodoModel Todo)
         {
             Dbset.Add(Todo);
             Dbcontext.SaveChanges();
+            return Todo;
         }
 
         public void FavTodo(TodoIdModel IdModel)

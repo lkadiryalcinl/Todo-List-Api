@@ -11,7 +11,7 @@ namespace TodoList.DataAccess.Abstract
         TodoModel GetTodoByID(int TodoID);
         void UpdateTodo(TodoModel Todo);
         void RemoveTodo(int TodoID);
-        void AddTodo(TodoModel Todo);
+        TodoModel AddTodo(TodoModel Todo);
         void FinishedTodo(TodoIdModel IdModel);
         void FavTodo(TodoIdModel IdModel);
         

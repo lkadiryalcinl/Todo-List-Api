@@ -45,17 +45,17 @@ namespace TodoList.Controllers
         }
 
         [HttpPost("Login")]
-        public LoginResponseModel Login(LoginRequestModel ReqModel)
+        public IActionResult Login(LoginRequestModel ReqModel)
         {
             var loginValidator = new LoginValidator();
             var validationResult = loginValidator.Validate(ReqModel);
 
             if (!validationResult.IsValid)
             {
-                return null;
+                return BadRequest(validationResult.Errors);
             }
 
-            return _authService.LoginUser(ReqModel);
+            return Ok(_authService.LoginUser(ReqModel));
         }
 
         [HttpPost("Activate")]
