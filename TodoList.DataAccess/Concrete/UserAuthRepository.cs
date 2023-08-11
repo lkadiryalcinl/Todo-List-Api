@@ -80,7 +80,7 @@ namespace TodoList.DataAccess.Concrete
             return Res;
         }
 
-        public string EditUser(EditUserReqModel User)
+        public EditUserResModel EditUser(EditUserReqModel User)
         {
             EditUserResModel Res = new EditUserResModel();
             UserAuthModel _user = GetUserById(User.UserID);
@@ -95,13 +95,16 @@ namespace TodoList.DataAccess.Concrete
                 Dbset.Update(_user);
                 authDbContext.SaveChanges();
                 Res.EditUserResponse = "Success";
+                return Res;
             }
             else
+            {
                 Res.EditUserResponse = "Usernameoremailtaken";
-            return Res.EditUserResponse;
+                return Res;
+            }
         }
 
-        public string ChangePassword(ChangePasswordReqModel User)
+        public ChangePasswordResModel ChangePassword(ChangePasswordReqModel User)
         {
             ChangePasswordResModel Res = new ChangePasswordResModel();
             UserAuthModel _user = GetUserById(User.UserID);
@@ -118,7 +121,7 @@ namespace TodoList.DataAccess.Concrete
             {
                 Res.ChangePasswordResponse = "PasswordSame";
             }
-            return Res.ChangePasswordResponse;
+            return Res;
         }
     }
 }

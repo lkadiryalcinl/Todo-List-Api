@@ -53,25 +53,32 @@ namespace TodoList.Business.Concrete
             return _userAuthRepository.UpdateUser(id, User);
         }
 
-        public string EditUser(EditUserReqModel User)
+        public EditUserResModel EditUser(EditUserReqModel User)
         {
             UserAuthModel _user = _userAuthRepository.GetUserById(User.UserID);
+            EditUserResModel Res = new EditUserResModel();
 
             if (_user.Password == Utils.EncryptPassword(User.ConfirmPassword))
+            {
                 return _userAuthRepository.EditUser(User);
-            return "PasswordWrong";
+            }
+            Res.EditUserResponse = "Passwrong";
+            return Res;
         }
 
-        public string ChangePassword(ChangePasswordReqModel User)
+        public ChangePasswordResModel ChangePassword(ChangePasswordReqModel User)
         {
+            ChangePasswordResModel Res = new ChangePasswordResModel();
             UserAuthModel _user = _userAuthRepository.GetUserById(User.UserID);
 
             if (_user.Password == Utils.EncryptPassword(User.oldPassword))
             {
                 User.NewPassword = Utils.EncryptPassword(User.NewPassword);
+                Res.ChangePasswordResponse = "Success";
                 return _userAuthRepository.ChangePassword(User);
             }
-            return "PasswordWrong";
+            Res.ChangePasswordResponse = "Passwrong";
+            return Res;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace TodoList.Business.Abstract
         void RemoveUser(int id);
         UserAuthModel UpdateUser(int id, UserAuthModel User);
         LoginResponseModel ActivateUser(int id);
-        string EditUser(EditUserReqModel User);
-        string ChangePassword(ChangePasswordReqModel Password);
+        EditUserResModel EditUser(EditUserReqModel User);
+        ChangePasswordResModel ChangePassword(ChangePasswordReqModel Password);
     }
 }

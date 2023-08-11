@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TodoList.Business.Abstract;
 using TodoList.Entities.Models;
 using TodoList.Entities.Models.ReqModels;
+using TodoList.Entities.Models.ResModels;
 using TodoList.validators;
 
 namespace TodoList.Controllers
@@ -84,13 +85,13 @@ namespace TodoList.Controllers
         }
 
         [HttpPut("EditUser")]
-        public string EditUser(EditUserReqModel User)
+        public EditUserResModel EditUser(EditUserReqModel User)
         {
             return _authService.EditUser(User);
         }
 
         [HttpPut("ChangePassword")]
-        public string ChangePassword(ChangePasswordReqModel User)
+        public ChangePasswordResModel ChangePassword(ChangePasswordReqModel User)
         {
             return _authService.ChangePassword(User);
         }
